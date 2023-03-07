@@ -1,9 +1,21 @@
+import ErrorResponse from './../utils/errorResponse.js';
+
 const errorHandler = (error, req, res, next) => {
+  let err = { ...error };
+
+  err.message = error.message;
+
   console.log(error.stack.red);
 
-  res.status(error.statusCode || 500).json({
+  // Mongoose bad ObjectId
+  if (error.name === "CastError") {
+    const message = `Resource with id that ends with '${error.value.slice(-6)}' was not found`;
+    err = new ErrorResponse(message, 404);
+  }
+
+  res.status(err.statusCode || 500).json({
     success: false,
-    error: error.message || "Internal Server Error",
+    error: err.message || "Internal Server Error",
   });
 };
 
