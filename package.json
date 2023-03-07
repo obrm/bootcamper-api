@@ -17,6 +17,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "colors": "^1.4.0",
     "nodemon": "^2.0.21"
   }
 }
