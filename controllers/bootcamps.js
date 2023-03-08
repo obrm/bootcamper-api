@@ -62,7 +62,7 @@ export const updateBootcamp = async (req, res, next) => {
     });
 
     if (!bootcamp) {
-      return res.status(404).json({ success: false, error: 'Bootcamp not found' });
+      return next(new ErrorResponse(`Bootcamp that ends with '${req.params.id.slice(-6)}' not found`, 404));
     }
 
     res.status(200).json({ success: true, data: bootcamp });
@@ -79,7 +79,7 @@ export const deleteBootcamp = async (req, res, next) => {
     const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
 
     if (!bootcamp) {
-      return res.status(404).json({ success: false, error: 'Bootcamp not found' });
+      return next(new ErrorResponse(`Bootcamp that ends with '${req.params.id.slice(-6)}' not found`, 404));
     }
 
     res.status(200).json({ success: true, data: {} });
