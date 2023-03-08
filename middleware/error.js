@@ -13,6 +13,18 @@ const errorHandler = (error, req, res, next) => {
     err = new ErrorResponse(message, 404);
   }
 
+  // Mongoose duplicate key
+  if (error.code === 11000) {
+    const message = "Duplicate field value entered";
+    err = new ErrorResponse(message, 400);
+  }
+
+  // Mongoose validation error
+  if (error.name === 'ValidationError') {
+    const message = Object.values(err.errors).map(val => val.message).join(', ');
+    err = new ErrorResponse(message, 400);
+  }
+
   res.status(err.statusCode || 500).json({
     success: false,
     error: err.message || "Internal Server Error",
