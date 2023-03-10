@@ -36,6 +36,26 @@ const CourseSchema = new mongoose.Schema({
     ref: 'Bootcamp',
     required: true
   },
-});
+},
+  {
+    toJSON: {
+      virtuals: true,
+      // Hide the _id field from the frontend
+      transform: function (_, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+      }
+    },
+    toObject: {
+      virtuals: true,
+      // Hide the _id field from the frontend
+      transform: function (_, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+      }
+    }
+  });
 
 export default mongoose.model('Course', CourseSchema);

@@ -6,8 +6,15 @@ import {
   updateBootcamp,
   deleteBootcamp,
   getBootcampsInRadius
-} from '../controllers/bootcamps.js';
+} from '../controllers/bootcampsController.js';
+
+// Include other resource routers
+import courseRouter from './courseRouter.js';
+
 const router = express.Router();
+
+// Re-route into other resource routers
+router.use('/:bootcampId/courses', courseRouter);
 
 router
   .route('/radius/:zipcode/:distance')

@@ -23,7 +23,7 @@ export const getBootcamps = asyncHandler(async (req, res, next) => {
   queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 
   // Finding resource
-  const query = Bootcamp.find(JSON.parse(queryStr));
+  const query = Bootcamp.find(JSON.parse(queryStr)).populate('courses');
 
   // Select fields
   if (req.query.select) {
@@ -82,7 +82,7 @@ export const getBootcamp = asyncHandler(async (req, res, next) => {
   const bootcamp = await Bootcamp.findById(req.params.id);
 
   if (!bootcamp) {
-    return next(new ErrorResponse(`Bootcamp that ends with '${req.params.id.slice(-6)}' not found`, 404));
+    return next(new ErrorResponse(`Bootcamp that ends with '${req.params.id.slice(-6)}' was not found`, 404));
   }
 
   res.status(200).json({ success: true, data: bootcamp });
@@ -110,7 +110,7 @@ export const updateBootcamp = asyncHandler(async (req, res, next) => {
   });
 
   if (!bootcamp) {
-    return next(new ErrorResponse(`Bootcamp that ends with '${req.params.id.slice(-6)}' not found`, 404));
+    return next(new ErrorResponse(`Bootcamp that ends with '${req.params.id.slice(-6)}' was not found`, 404));
   }
 
   res.status(200).json({ success: true, data: bootcamp });
@@ -120,18 +120,20 @@ export const updateBootcamp = asyncHandler(async (req, res, next) => {
 // @route   DELETE /api/v1/bootcamps/:id
 // @access  Private
 export const deleteBootcamp = asyncHandler(async (req, res, next) => {
-  const bootcamp = await Bootcamp.findByIdAndDelete(req.params.id);
+  const bootcamp = await Bootcamp.findById(req.params.id);
 
   if (!bootcamp) {
-    return next(new ErrorResponse(`Bootcamp that ends with '${req.params.id.slice(-6)}' not found`, 404));
+    return next(new ErrorResponse(`Bootcamp that ends with '${req.params.id.slice(-6)}' was not found`, 404));
   }
+
+  bootcamp.deleteOne();
 
   res.status(200).json({ success: true, data: {} });
 });
 
 // @desc    Get bootcamps within a radius
 // @route   GET /api/v1/bootcamps/radius/:zipcode/:distance
-// @access  Public
+// @access  Private
 export const getBootcampsInRadius = asyncHandler(async (req, res, next) => {
   const { zipcode, distance } = req.params;
 

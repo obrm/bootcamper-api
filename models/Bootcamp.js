@@ -104,10 +104,26 @@ const BootcampSchema = new mongoose.Schema({
   //   required: true
   // }
 },
-  // {
-  //   toJSON: { virtuals: true },
-  //   toObject: { virtuals: true }
-  // }
+  {
+    toJSON: {
+      virtuals: true,
+      // Hide the _id field from the frontend
+      transform: function (_, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+      }
+    },
+    toObject: {
+      virtuals: true,
+      // Hide the _id field from the frontend
+      transform: function (_, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+      }
+    }
+  }
 );
 
 // Create bootcamp slug from the name
@@ -133,6 +149,21 @@ BootcampSchema.pre('save', async function (next) {
   // Do not save address in database
   this.address = undefined;
   next();
+});
+
+// Cascade delete courses when a bootcamp is deleted
+BootcampSchema.pre('deleteOne', { document: true, query: false }, async function (next) {
+  console.log(`Courses being removed from bootcamp ${this._id}`);
+  await this.model('Course').deleteMany({ bootcamp: this._id });
+  next();
+});
+
+// Reverse populate with virtuals
+BootcampSchema.virtual('courses', {
+  ref: 'Course',
+  localField: '_id',
+  foreignField: 'bootcamp',
+  justOne: false
 });
 
 export default mongoose.model('Bootcamp', BootcampSchema);

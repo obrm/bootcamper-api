@@ -4,7 +4,8 @@ import colors from 'colors';
 import morgan from 'morgan';
 
 import connectDB from './config/db.js';
-import bootcamps from './routes/bootcamps.js';
+import bootcamps from './routes/bootcampsRouter.js';
+import courses from './routes/courseRouter.js';
 import errorHandler from './middleware/error.js';
 
 dotenv.config({ path: './config/config.env' });
@@ -22,6 +23,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use('/api/v1/bootcamps', bootcamps);
+app.use('/api/v1/courses', courses);
 
 app.use(errorHandler);
 
