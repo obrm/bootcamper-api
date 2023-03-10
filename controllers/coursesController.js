@@ -65,7 +65,12 @@ export const addCourse = asyncHandler(async (req, res, next) => {
     );
   }
 
-  const course = await Course.create(req.body);
+  let course = await Course.create(req.body);
+
+  course = await Course.findById(course._id).populate({
+    path: 'bootcamp',
+    select: 'name description'
+  });
 
   res.status(200).json({
     success: true,
