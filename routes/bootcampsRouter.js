@@ -5,8 +5,12 @@ import {
   createBootcamp,
   updateBootcamp,
   deleteBootcamp,
-  getBootcampsInRadius
+  getBootcampsInRadius,
+  bootcampImageUpload
 } from '../controllers/bootcampsController.js';
+
+import Bootcamp from '../models/Bootcamp.js';
+import advancedResults from '../middleware/advancedResults.js';
 
 // Include other resource routers
 import courseRouter from './courseRouter.js';
@@ -14,7 +18,12 @@ import courseRouter from './courseRouter.js';
 const router = express.Router();
 
 // Re-route into other resource routers
-router.use('/:bootcampId/courses', courseRouter);
+router
+  .use('/:bootcampId/courses', courseRouter);
+
+router
+  .route('/:id/image')
+  .put(bootcampImageUpload);
 
 router
   .route('/radius/:zipcode/:distance')
@@ -22,7 +31,7 @@ router
 
 router
   .route('/')
-  .get(getBootcamps)
+  .get(advancedResults(Bootcamp, 'courses'), getBootcamps)
   .post(createBootcamp);
 
 router
