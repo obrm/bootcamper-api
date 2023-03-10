@@ -2,7 +2,9 @@ import express from 'express';
 import {
   getCourses,
   getCourse,
-  addCourse
+  addCourse,
+  updateCourse,
+  deleteCourse
 } from '../controllers/coursesController.js';
 
 const router = express.Router({ mergeParams: true });
@@ -14,6 +16,8 @@ router
 
 router
   .route('/:id')
-  .get(getCourse);
+  .get(getCourse)
+  .put(updateCourse)
+  .delete(deleteCourse);
 
 export default router;

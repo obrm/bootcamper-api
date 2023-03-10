@@ -113,7 +113,10 @@ export const updateBootcamp = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`Bootcamp that ends with '${req.params.id.slice(-6)}' was not found`, 404));
   }
 
-  res.status(200).json({ success: true, data: bootcamp });
+  res.status(200).json({
+    success: true,
+    data: bootcamp
+  });
 });
 
 // @desc    Delete a bootcamp
@@ -128,7 +131,10 @@ export const deleteBootcamp = asyncHandler(async (req, res, next) => {
 
   bootcamp.deleteOne();
 
-  res.status(200).json({ success: true, data: {} });
+  res.status(200).json({
+    success: true,
+    data: {}
+  });
 });
 
 // @desc    Get bootcamps within a radius
