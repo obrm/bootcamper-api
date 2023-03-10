@@ -1,4 +1,5 @@
 import Course from '../models/Course.js';
+import Bootcamp from '../models/Bootcamp.js';
 import ErrorResponse from '../utils/errorResponse.js';
 import asyncHandler from '../middleware/async.js';
 
@@ -42,6 +43,29 @@ export const getCourse = asyncHandler(async (req, res, next) => {
       new ErrorResponse(`Course that ends with '${req.params.id.slice(-6)}' was not found`, 404)
     );
   }
+
+  res.status(200).json({
+    success: true,
+    data: course
+  });
+});
+
+// @desc      Add a course
+// @route     POST /api/v1/bootcamp/:bootcampId/courses
+// @route     GET /api/v1/bootcamps/:bootcampId/courses
+// @access    Private
+export const addCourse = asyncHandler(async (req, res, next) => {
+  req.body.bootcamp = req.params.bootcampId;
+
+  const bootcamp = await Bootcamp.findById(req.params.bootcampId);
+
+  if (!bootcamp) {
+    return next(
+      new ErrorResponse(`Bootcamp that ends with '${req.params.bootcampId.slice(-6)}' was not found`, 404)
+    );
+  }
+
+  const course = await Course.create(req.body);
 
   res.status(200).json({
     success: true,
