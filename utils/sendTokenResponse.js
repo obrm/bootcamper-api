@@ -11,6 +11,11 @@ const sendTokenResponse = (user, statusCode, res) => {
     httpOnly: true
   };
 
+  // Send secure cookie in production
+  if (process.env.NODE_ENV === 'production') {
+    options.secure = true;
+  }
+
   // It's up to the client-side to decide how to handle the token
   res
     .status(statusCode)
