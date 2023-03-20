@@ -2,7 +2,7 @@ import path from 'path';
 import geocoder from '../utils/geocoder.js';
 import Bootcamp from '../models/Bootcamp.js';
 import ErrorResponse from '../utils/errorResponse.js';
-import asyncHandler from '../middleware/async.js';
+import asyncHandler from '../middleware/asyncHandler.js';
 
 // @desc    Get all bootcamps
 // @route   GET /api/v1/bootcamps

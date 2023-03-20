@@ -3,12 +3,17 @@ import express from 'express';
 import dotenv from 'dotenv';
 import colors from 'colors';
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
 import fileUpload from 'express-fileupload';
 
 import connectDB from './config/db.js';
-import bootcamps from './routes/bootcampsRouter.js';
-import courses from './routes/courseRouter.js';
-import errorHandler from './middleware/error.js';
+
+import errorHandler from './middleware/errorHandler.js';
+
+import bootcamps from './routes/bootcampsRoutes.js';
+import courses from './routes/courseRoutes.js';
+import auth from './routes/authRoutes.js';
+
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -23,6 +28,9 @@ const app = express();
 
 // Body parser middleware
 app.use(express.json());
+
+// Cookie parser middleware
+app.use(cookieParser());
 
 // Dev logging middleware
 if (process.env.NODE_ENV !== 'production') {
@@ -43,6 +51,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/bootcamps', bootcamps);
 app.use('/api/v1/courses', courses);
+app.use('/api/v1/auth', auth);
 
 app.use(errorHandler);
 

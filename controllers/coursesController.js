@@ -1,7 +1,7 @@
 import Course from '../models/Course.js';
 import Bootcamp from '../models/Bootcamp.js';
 import ErrorResponse from '../utils/errorResponse.js';
-import asyncHandler from '../middleware/async.js';
+import asyncHandler from '../middleware/asyncHandler.js';
 
 // @desc      Get all courses
 // @route     GET /api/v1/courses

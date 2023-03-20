@@ -13,7 +13,7 @@ import Bootcamp from '../models/Bootcamp.js';
 import advancedResults from '../middleware/advancedResults.js';
 
 // Include other resource routers
-import courseRouter from './courseRouter.js';
+import courseRouter from './courseRoutes.js';
 
 const router = express.Router();
 
