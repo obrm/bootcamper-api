@@ -1,4 +1,5 @@
 import ErrorResponse from '../utils/errorResponse.js';
+import sendTokenResponse from '../utils/sendTokenResponse.js';
 import asyncHandler from '../middleware/asyncHandler.js';
 import User from '../models/User.js';
 
@@ -15,12 +16,8 @@ export const registerUser = asyncHandler(async (req, res, next) => {
     role
   });
 
-  const token = user.getSignedJwtToken();
-
-  res.status(201).json({
-    success: true,
-    token,
-  });
+  // Send token to client
+  sendTokenResponse(user, 200, res);
 });
 
 // @desc    Login user
@@ -49,12 +46,8 @@ export const loginUser = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse('Invalid credentials', 401));
   }
 
-  const token = user.getSignedJwtToken();
-
-  res.status(201).json({
-    success: true,
-    token,
-  });
+  // Send token to client
+  sendTokenResponse(user, 200, res);
 });
 
 

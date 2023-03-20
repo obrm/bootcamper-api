@@ -5,8 +5,20 @@ const sendTokenResponse = (user, statusCode, res) => {
 
   const options = {
     expires: new Date(
+      // Convert the 30 days in the config t0 30 days in milliseconds
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
     httpOnly: true
   };
+
+  // It's up to the client-side to decide how to handle the token
+  res
+    .status(statusCode)
+    .cookie('token', token, options)
+    .json({
+      success: true,
+      token
+    });
 };
+
+export default sendTokenResponse;
