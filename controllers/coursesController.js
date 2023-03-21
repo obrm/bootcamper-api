@@ -15,7 +15,7 @@ export const getCourses = asyncHandler(async (req, res, next) => {
       success: true,
       count: courses.length,
       data: courses
-    });    
+    });
   } else {
     res.status(200).json(res.advancedResults);
   }
@@ -48,6 +48,7 @@ export const getCourse = asyncHandler(async (req, res, next) => {
 // @access    Private
 export const addCourse = asyncHandler(async (req, res, next) => {
   req.body.bootcamp = req.params.bootcampId;
+  req.body.user = req.user.id;
 
   const bootcamp = await Bootcamp.findById(req.params.bootcampId);
 
@@ -56,6 +57,12 @@ export const addCourse = asyncHandler(async (req, res, next) => {
       new ErrorResponse(`Bootcamp that ends with '${req.params.bootcampId.slice(-6)}' was not found`, 404)
     );
   }
+
+  // Make sure user is bootcamp owner
+  if (bootcamp.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(new ErrorResponse(`User with ID that ends with '${req.user.id.slice(-6)}' is not authorized to add a course to bootcamp that ends with ID '${req.params.bootcampId.slice(-6)}'`, 401));
+  }
+
 
   let course = await Course.create(req.body);
 
@@ -74,16 +81,23 @@ export const addCourse = asyncHandler(async (req, res, next) => {
 // @route     PUT /api/v1/courses/:id
 // @access    Private
 export const updateCourse = asyncHandler(async (req, res, next) => {
-  let course = await Course.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true
-  });
+  let course = await Course.findById(req.params.id);
 
   if (!course) {
     return next(
       new ErrorResponse(`Course that ends with '${req.params.id.slice(-6)}' was not found`, 404)
     );
   }
+
+  // Make sure user is bootcamp owner
+  if (course.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(new ErrorResponse(`User with ID that ends with '${req.user.id.slice(-6)}' is not authorized to update a course with ID ends with '${req.params.id.slice(-6)}'`, 401));
+  }
+
+  course = await Course.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true
+  });
 
   res.status(200).json({
     success: true,
@@ -101,6 +115,11 @@ export const deleteCourse = asyncHandler(async (req, res, next) => {
     return next(
       new ErrorResponse(`Course that ends with '${req.params.id.slice(-6)}' was not found`, 404)
     );
+  }
+  console.log(course);
+  // Make sure user is bootcamp owner
+  if (course.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    return next(new ErrorResponse(`User with ID that ends with '${req.user.id.slice(-6)}' is not authorized to delete a course with ID ends with '${req.params.id.slice(-6)}'`, 401));
   }
 
   await course.deleteOne();
