@@ -70,7 +70,7 @@ UserSchema.methods.getSignedJwtToken = function () {
   });
 };
 
-// Instance method to match user entered password to hashed password
+// Match user entered password to hashed password in database
 UserSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
