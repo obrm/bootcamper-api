@@ -1,13 +1,32 @@
 import express from 'express';
-import { protect } from './../middleware/authMiddleware.js';
 import {
-  updateDetails,
-  updatePassword
+  getUsers,
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser
 } from '../controllers/userController.js';
 
-const router = express.Router();
+import User from '../models/User.js';
 
-router.put('/update-details', protect, updateDetails);
-router.put('/update-password', protect, updatePassword);
+import { protect, authorize } from './../middleware/authMiddleware.js';
+import advancedResults from '../middleware/advancedResults.js';
+
+
+const router = express.Router({ mergeParams: true });
+
+router.use(protect);
+router.use(authorize('admin'));
+
+router
+  .route('/')
+  .get(advancedResults(User), getUsers)
+  .post(createUser);
+
+router
+  .route('/:id')
+  .get(getUser)
+  .put(updateUser)
+  .delete(deleteUser);
 
 export default router;

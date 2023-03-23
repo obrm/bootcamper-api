@@ -10,8 +10,8 @@ import {
 } from '../controllers/bootcampsController.js';
 
 import Bootcamp from '../models/Bootcamp.js';
-import advancedResults from '../middleware/advancedResults.js';
 
+import advancedResults from '../middleware/advancedResults.js';
 import { protect, authorize } from '../middleware/authMiddleware.js';
 
 // Include other resource routers
