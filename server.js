@@ -13,7 +13,8 @@ import errorHandler from './middleware/errorHandler.js';
 import bootcamps from './routes/bootcampsRoutes.js';
 import courses from './routes/courseRoutes.js';
 import auth from './routes/authRoutes.js';
-import user from './routes/userRoutes.js';
+import users from './routes/userRoutes.js';
+import reviews from './routes/reviewsRoutes.js';
 
 import { fileURLToPath } from 'url';
 
@@ -53,7 +54,8 @@ app.get('/', (req, res) => {
 app.use('/api/v1/bootcamps', bootcamps);
 app.use('/api/v1/courses', courses);
 app.use('/api/v1/auth', auth);
-app.use('/api/v1/user', user);
+app.use('/api/v1/users', users);
+app.use('/api/v1/reviews', reviews);
 
 app.use(errorHandler);
 

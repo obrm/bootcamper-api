@@ -163,7 +163,7 @@ export const updateDetails = asyncHandler(async (req, res, next) => {
 // @route   PUT /api/v1/auth/update-password
 // @access  Private
 export const updatePassword = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id).select('+password');
+  const user = await User.findById(req.user.id);
 
   // Check current password
   if (!(await user.matchPassword(req.body.currentPassword))) {

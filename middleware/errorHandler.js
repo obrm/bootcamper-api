@@ -15,9 +15,10 @@ const errorHandler = (error, req, res, next) => {
 
   // Mongoose duplicate key
   if (error.code === 11000) {
-    const message = "Duplicate field value entered";
+    const field_value = err.message.match(/key:\s*\{(?:.*\s*)?"(.*)"/i)[1];
+    const message = `Duplicate key entered: ${field_value}`;
     err = new ErrorResponse(message, 400);
-  }
+  }  
 
   // Mongoose validation error
   if (error.name === 'ValidationError') {

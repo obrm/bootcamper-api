@@ -15,13 +15,17 @@ import advancedResults from '../middleware/advancedResults.js';
 import { protect, authorize } from '../middleware/authMiddleware.js';
 
 // Include other resource routers
-import courseRouter from './courseRoutes.js';
+import coursesRouter from './courseRoutes.js';
+import reviewsRouter from './reviewsRoutes.js';
 
 const router = express.Router();
 
 // Re-route into other resource routers
 router
-  .use('/:bootcampId/courses', courseRouter);
+  .use('/:bootcampId/courses', coursesRouter);
+
+router
+  .use('/:bootcampId/reviews', reviewsRouter);
 
 router
   .route('/:id/image')

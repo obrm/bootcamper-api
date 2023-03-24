@@ -26,7 +26,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a password'],
     minlength: 6,
-    select: false
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
@@ -40,6 +39,7 @@ const UserSchema = new mongoose.Schema({
       transform(_, ret) {
         ret.id = ret._id;
         delete ret._id;
+        delete ret.password;
         delete ret.__v;
       },
     },
@@ -47,6 +47,7 @@ const UserSchema = new mongoose.Schema({
       transform(_, ret) {
         ret.id = ret._id;
         delete ret._id;
+        delete ret.password;
         delete ret.__v;
       },
     },
