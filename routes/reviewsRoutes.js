@@ -1,7 +1,10 @@
 import express from 'express';
 import {
   getReviews,
-  getReview
+  getReview,
+  addReview,
+  updateReview,
+  deleteReview
 } from '../controllers/reviewsController.js';
 
 import Review from '../models/Review.js';
@@ -16,10 +19,13 @@ router
   .get(advancedResults(Review, {
     path: 'bootcamp',
     select: 'name description'
-  }), getReviews);
-// .post(protect, authorize('publisher', 'admin'), addReview);
+  }), getReviews)
+  .post(protect, authorize('user', 'admin'), addReview);
 
 router
-  .route('/:id').get(getReview);
+  .route('/:id')
+  .get(getReview)
+  .put(protect, authorize('user', 'admin'), updateReview)
+  .delete(protect, authorize('user', 'admin'), deleteReview);
 
 export default router;

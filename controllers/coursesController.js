@@ -60,7 +60,7 @@ export const addCourse = asyncHandler(async (req, res, next) => {
 
   // Make sure user is bootcamp owner
   if (bootcamp.user.toString() !== req.user.id && req.user.role !== 'admin') {
-    return next(new ErrorResponse(`User with ID that ends with '${req.user.id.slice(-6)}' is not authorized to add a course to bootcamp that ends with ID '${req.params.bootcampId.slice(-6)}'`, 401));
+    return next(new ErrorResponse(`User with ID that ends with '${req.user.id.slice(-6)}' is not authorized to add a course to this bootcamp`, 401));
   }
 
 
@@ -91,7 +91,7 @@ export const updateCourse = asyncHandler(async (req, res, next) => {
 
   // Make sure user is bootcamp owner
   if (course.user.toString() !== req.user.id && req.user.role !== 'admin') {
-    return next(new ErrorResponse(`User with ID that ends with '${req.user.id.slice(-6)}' is not authorized to update a course with ID ends with '${req.params.id.slice(-6)}'`, 401));
+    return next(new ErrorResponse(`User with ID that ends with '${req.user.id.slice(-6)}' is not authorized to update this course`, 401));
   }
 
   course = await Course.findByIdAndUpdate(req.params.id, req.body, {
@@ -116,10 +116,10 @@ export const deleteCourse = asyncHandler(async (req, res, next) => {
       new ErrorResponse(`Course that ends with '${req.params.id.slice(-6)}' was not found`, 404)
     );
   }
-  console.log(course);
+
   // Make sure user is bootcamp owner
   if (course.user.toString() !== req.user.id && req.user.role !== 'admin') {
-    return next(new ErrorResponse(`User with ID that ends with '${req.user.id.slice(-6)}' is not authorized to delete a course with ID ends with '${req.params.id.slice(-6)}'`, 401));
+    return next(new ErrorResponse(`User with ID that ends with '${req.user.id.slice(-6)}' is not authorized to delete this course`, 401));
   }
 
   await course.deleteOne();
