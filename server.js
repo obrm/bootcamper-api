@@ -5,6 +5,12 @@ import colors from 'colors';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import fileUpload from 'express-fileupload';
+import mongoSanitize from 'express-mongo-sanitize';
+import helmet from 'helmet';
+import xss from 'xss-clean';
+import hpp from 'hpp';
+import rateLimit from 'express-rate-limit';
+import cors from 'cors';
 
 import connectDB from './config/db.js';
 
@@ -41,6 +47,34 @@ if (process.env.NODE_ENV !== 'production') {
 
 // File uploading middleware
 app.use(fileUpload());
+
+// Sanitize data
+app.use(mongoSanitize());
+
+// Prevent XSS (Cross-Site Scripting) attacks
+/*
+  It is a type of web security vulnerability that allows attackers to inject malicious scripts into web pages viewed by other users.
+*/
+app.use(xss());
+
+// Prevent parameter pollution
+app.use(hpp());
+
+// Enable CORS (Cross-Origin Resource Sharing)
+/*
+  CORS is a web security mechanism that allows web applications to access resources hosted on other domains while protecting against unauthorized access and web-based attacks.
+*/
+app.use(cors());
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  max: 100
+});
+app.use(limiter);
+
+// Set security HTTP headers
+app.use(helmet());
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));

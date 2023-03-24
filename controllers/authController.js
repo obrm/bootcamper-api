@@ -52,6 +52,26 @@ export const loginUser = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res);
 });
 
+// @desc    Log user out / clear cookie
+// @route   GET /api/v1/auth/logout
+// @access  Private
+export const logout = asyncHandler(async (req, res, next) => {
+  res.cookie('token', null, {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+    secure: true, // if you are using HTTPS
+    sameSite: 'strict' // to prevent CSRF (Cross-Site Request Forgery) attacks
+    /*
+       CSRF is a type of web security vulnerability that allows an attacker to perform unwanted actions on behalf of an authenticated user. The attack occurs when a malicious website or script makes a request to a legitimate website where the user is already authenticated.
+    */
+  });
+
+  res.status(200).json({
+    success: true,
+    data: {}
+  });
+});
+
 // @desc    Get current logged in user
 // @route   POST /api/v1/auth/current-user
 // @access  Private

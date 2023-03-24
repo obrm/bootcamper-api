@@ -9,7 +9,7 @@ const errorHandler = (error, req, res, next) => {
 
   // Mongoose bad ObjectId
   if (error.name === "CastError") {
-    const message = `Resource with id that ends with '${error.value.slice(-6)}' was not found`;
+    const message = `Resource not found`;
     err = new ErrorResponse(message, 404);
   }
 
