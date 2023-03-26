@@ -99,7 +99,7 @@ export const forgotPassword = asyncHandler(async (req, res, next) => {
 
   await user.save({ validateBeforeSave: false });
 
-  // Create reset url
+  // Create reset url  
   const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/auth/reset-password/${resetToken}`;
 
   const message = `You are receiving this email because you (or someone else) has requested the reset of a password. If you did not make this request, please ignore this email. Otherwise, please make a PUT request to: \n\n ${resetUrl}`;
@@ -185,12 +185,17 @@ export const updateDetails = asyncHandler(async (req, res, next) => {
 export const updatePassword = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
+  if (!user) {
+    return next(new ErrorResponse('Invalid token', 400));
+  }
+
   // Check current password
   if (!(await user.matchPassword(req.body.currentPassword))) {
     return next(new ErrorResponse('Password is incorrect', 401));
   }
 
   user.password = req.body.newPassword;
+
   await user.save();
 
   sendTokenResponse(user, 200, res);
