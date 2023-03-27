@@ -66,5 +66,3 @@ if (process.argv[2] === '-i') {
 } else if (process.argv[2] === '-d') {
   deleteData();
 }
-
-
