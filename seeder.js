@@ -66,3 +66,6 @@ if (process.argv[2] === '-i') {
 } else if (process.argv[2] === '-d') {
   deleteData();
 }
+
+// Run in the terminal `node seeder.js -i` for importing data into DB
+// Run in the terminal `node seeder.js -d` for destrying data in DB
