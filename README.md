@@ -41,7 +41,7 @@ FROM_NAME=Bootcamper
 ## Dependencies
 
 #### Node.js
-* nodemon
+* nodemon (dev dependency)
   
 #### Express.js
 
@@ -81,7 +81,7 @@ FROM_NAME=Bootcamper
 * dotenv
 * slugify
 * nodemailer
-* colors
+* colors (dev dependency)
 
 ### Installing Dependencies
 Install the required dependencies by running the following command:
