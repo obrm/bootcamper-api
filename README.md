@@ -60,7 +60,6 @@ FROM_NAME=Bootcamper
 
 #### MongoDB
 
-* morgan
 * mongoose
 
 #### Auth
@@ -78,6 +77,7 @@ FROM_NAME=Bootcamper
   
 #### Utils
 
+* morgan
 * dotenv
 * slugify
 * nodemailer
