@@ -185,6 +185,12 @@ This project utilizes various middleware for tasks such as error handling, authe
 * `utils/sendEmail.js`: for sending password reset emails
 * `utils/sendTokenResponse.js`: for setting JWT tokens and sending as response
 * `utils/geoCoder.js`: for converting addresses to coordinates using Node-geocoder
-  
+
+## Seeder
+
+The `seeder.js` file is used to import or delete data from the MongoDB database. It reads JSON files for bootcamps, courses, users, and reviews, and inserts them into their respective collections in the database using Mongoose.
+
+To import data into the database, run the command `node seeder.js -i` in the terminal. To delete all data from the database, run `node seeder.js -d`.
+
 ## License
 This project is licensed under the MIT License.
