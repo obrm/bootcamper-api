@@ -1,6 +1,10 @@
 # Node.js RESTful API
 
-This RESTful API, built with Node.js, Express.js, and MongoDB, features user authentication, CRUD operations, pagination, filtering, sorting, and geocoding. It allows for uploading images, searching for bootcamps by distance, and advanced filtering. Various features include middleware for error handling, authentication, and authorization. The API includes functionality for managing bootcamps, courses, reviews and users.
+This RESTful API is built with Node.js, Express.js, and MongoDB, featuring various functionalities, including user authentication, CRUD operations, pagination, filtering, sorting, and geocoding. 
+
+It allows image uploading, searching for bootcamps by distance, and advanced filtering. Security measures include middleware for error handling, and authentication. 
+
+This API offers a rich set of endpoints to manage bootcamps, courses, reviews, and users. For instance, the API allows creating, retrieving, updating, and deleting bootcamps, courses, reviews, and users based on different access levels. The API offers a wide range of access levels, including public, private for authenticated users and secured for publishers and admins. The API supports pagination, filtering, and sorting for bootcamps, courses, and reviews. Additionally, the API provides functionality to search for bootcamps within a certain radius, as well as to upload bootcamp images.
 
 ## Getting Started
 To get started, you'll need Node.js installed on your local machine and a MongoDB Atlas account. You'll also need a config.env file with the required environment variables.
