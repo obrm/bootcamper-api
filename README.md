@@ -1,6 +1,6 @@
 # Node.js RESTful API
 
-This project is a RESTful API built with Node.js and Express.js. It features user authentication, CRUD operations, pagination, filtering, sorting, and geocoding. It utilizes MongoDB as a database and JSON Web Tokens (JWT) for authentication and authorization. The API also includes various middleware for error handling, authentication, and authorization.
+This RESTful API, built with Node.js, Express.js, and MongoDB, features user authentication, CRUD operations, pagination, filtering, sorting, and geocoding. It allows for uploading images, searching for bootcamps by distance, and advanced filtering. Various features include middleware for error handling, authentication, and authorization. The API includes functionality for managing bootcamps, courses, reviews and users.
 
 ## Getting Started
 To get started, you'll need Node.js installed on your local machine and a MongoDB Atlas account. You'll also need a config.env file with the required environment variables.
@@ -124,6 +124,13 @@ The API provides the following endpoints:
 * Create course: `POST /api/v1/bootcamps/:bootcampId/courses` (private - publisher/admin)
 * Update course: `PUT /api/v1/courses/:id` (private - publisher/admin)
 * Delete course: `DELETE /api/v1/courses/:id` (private - publisher/admin)
+### Reviews
+
+* Get all reviews: `GET /api/v1/reviews` (public)
+* Get a single review by ID: `GET /api/v1/reviews/:id` (public)
+* Create a new review for a bootcamp: `POST /api/v1/bootcamps/:bootcampId/reviews` (private - requires authentication)
+* Update a review: `PUT /api/v1/reviews/:id` (private - requires authentication)
+* Delete a review: `DELETE /api/v1/reviews/:id` (private - requires authentication)
 
 ### Users
 
@@ -133,13 +140,6 @@ The API provides the following endpoints:
 * Update a user: `PUT /api/v1/users/:id` (private - admin)
 * Delete a user: `DELETE /api/v1/users/:id` (private - admin)
 
-### Reviews
-
-Get all reviews: `GET /api/v1/reviews` (public)
-Get a single review by ID: `GET /api/v1/reviews/:id` (public)
-Create a new review for a bootcamp: `POST /api/v1/bootcamps/:bootcampId/reviews` (private - requires authentication)
-Update a review: `PUT /api/v1/reviews/:id` (private - requires authentication)
-Delete a review: `DELETE /api/v1/reviews/:id` (private - requires authentication)
 
 ## Features
 
