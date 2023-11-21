@@ -3,3 +3,4 @@ node_modules/
 .vscode
 _data
 seeder.js
+config.env
