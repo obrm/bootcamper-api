@@ -76,7 +76,7 @@ export const logout = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/auth/current-user
 // @access  Private
 export const getCurrentUser = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id);
+  const user = req.user;
 
   res.status(200).json({
     success: true,
@@ -124,11 +124,6 @@ export const forgotPassword = asyncHandler(async (req, res, next) => {
 
     return next(new ErrorResponse('Email could not be sent', 500));
   }
-
-  res.status(200).json({
-    success: true,
-    data: user
-  });
 });
 
 // @desc    Reset password

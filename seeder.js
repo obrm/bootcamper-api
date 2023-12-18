@@ -10,10 +10,7 @@ import Review from './models/Review.js';
 
 dotenv.config({ path: './config/config.env' });
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGO_URI);
 
 const bootcamps = JSON.parse(
   fs.readFileSync(new URL('./_data/bootcamps.json', import.meta.url), 'utf-8')
